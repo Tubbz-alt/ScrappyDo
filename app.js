@@ -32,6 +32,19 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+var mongoose = require('mongoose');
+
+var mongoDB = 'mongodb://Pranav:password@ds121696.mlab.com:21696/users';
+mongoose.connect(mongoDB, {
+  useMongoClient: true
+});
+
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
