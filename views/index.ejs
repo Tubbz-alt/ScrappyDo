@@ -156,6 +156,7 @@
       }
   }   
   function updateRecs() {
+  	console.log('YOOO');
     socket.emit("update-recs", {filterParts: filterParts});
   }
   socket.on('recs', function (recommendations) {

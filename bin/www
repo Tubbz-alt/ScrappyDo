@@ -33,7 +33,6 @@ var io = require('socket.io')(server);
 
 var findWord = function(word) {
   Parts.findOne({stemmed: stemmer(word.toLowerCase())}, function(err, docs) {
-    //console.log(docs);
     if (docs === [] || docs === null) {
           Parts.create({name: word, stemmed: stemmer(word.toLowerCase())}, function(error) {
             if (error) {console.log(error);}
@@ -62,9 +61,9 @@ io.on('connection', function(socket) {
   });
   socket.on('update-recs', function(data) {
     filterParts = data.filterParts;
-    var length = filterParts.length;
-
-    Project.find({parts: filterParts}, function(projects) {
+    console.log(filterParts);
+    console.log("whatever the fuck we're searching is: " + filterParts);
+    Project.find({parts: {$all : filterParts}}, function(err, projects) {
       console.log(projects);
       // socket.emit('recs', projects);
     });
