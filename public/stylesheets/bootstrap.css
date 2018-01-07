@@ -15,6 +15,11 @@
   font-family: Quicksand;
 }
 
+#home_btn {
+  color: white;
+  font-family: Quicksand;
+}
+
 #logo {
   max-height: 70px;
   max-width: 70px;
@@ -180,6 +185,7 @@ body {
 .navbar {
     overflow: hidden;
     background-color: #333;
+
     font-family: Arial;
     height: 10%;
 }
@@ -3570,12 +3576,12 @@ fieldset[disabled] .btn-success.focus {
 .btn-info:focus,
 .btn-info.focus {
   color: #fff;
-  background-color: #31b0d5;
+  background-color: #0C0429;
   border-color: #1b6d85;
 }
 .btn-info:hover {
   color: #fff;
-  background-color: #31b0d5;
+  background-color: #0C0429;
   border-color: #269abc;
 }
 .btn-info:active,
