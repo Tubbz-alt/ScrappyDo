@@ -49,7 +49,7 @@ io.on('connection', function(socket) {
     console.log(data);
     Project.create({parts: data.parts, name: data.name, link: data.link});
     console.log("parts: " + data.parts);
-    var parts = (data.parts).split(",");
+    var parts = data.parts;
     for (var s in parts) {
       var part = parts[s];
       findWord(part);

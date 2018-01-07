@@ -55,12 +55,14 @@
   			if(index > -1) filterParts.splice(index, 1);
     		var effect = $(this).data('effect');
         	$(this).closest('.panel')[effect]();
+        	updateRecs();
   		});
   		$("#add-proj").submit(function(e) {
   			e.preventDefault();
   			var name = $('#name').val();
   			var link = $('#link').val();
-  			var parts = $('#parts').val();
+  			var stringParts = $('#parts').val();
+  			var parts = stringParts.split(",");
   			socket.emit('new-proj', {name: name, link: link, parts: parts});
   			$('#myModal').modal('toggle');
   		});
@@ -77,6 +79,7 @@
   				filterParts.push(part.split(' ').join('_'));
   				$("#tags").append(html);
   				$("#newPart").val("");
+  				updateRecs();
   			}
   		});
   	});
@@ -94,6 +97,20 @@
 	        }
 	    }
 	}  	
+	function updateRecs() {
+		var length = filterParts.length();
+		Project.createIndex({"parts":"text"})
+		
+		var match = length;
+		var terms = filterParts.join(" ");
+
+		Project.aggregate([
+		 { $match: { $text: { $search: terms } } },
+		 { $project: {"parts":1, score: {$meta: "textScore"}}},
+		 { $sort: { score: 1 }},
+		 { $match: { score: { $gte: match } } }
+		])
+	}
   </script>
 </head>
 <body>
@@ -155,6 +172,11 @@
     </div>
   </div>
   
+</div>
+
+<!-- Add panels of stuff to the following -->
+<div id = "recommendations">
+
 </div>
 
 <div>
