@@ -40,7 +40,7 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <script type="text/javascript">
 
-    var socket = io('http://localhost:3000');
+    var socket = io('http://localhost:8081');
     var filterParts = [];
     var makeProject = function(project) {
     	var chooseType = function(jawn) {
@@ -164,10 +164,12 @@
   socket.on('recs', function (recommendations) {
     $('#allProjects').html('');
     recommendations.forEach(function(elt) {
-      console.log(elt);
       var html = makeProject(elt);
       $('#allProjects').append(html);
     });
+    if(recommendations.length === 0) {
+      socket.emit('again', '');
+    }
         // var length = recommendations.length;
     // for(var i = 0; i < length; i++) {
     //   var html = makeProject(recommendations[i]);

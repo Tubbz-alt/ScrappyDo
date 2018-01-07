@@ -80,6 +80,11 @@ io.on('connection', function(socket) {
   Project.find({}, function(err, projects) {
     socket.emit('projects', projects);
   });
+  socket.on('again', function() {
+    Project.find({}, function(err, projects) {
+      socket.emit('projects', projects);
+    });
+  });
   // socket.on('update-recs', function(data) {
   //   filterParts = data.filterParts;
   //   console.log(filterParts);
