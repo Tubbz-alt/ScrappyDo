@@ -33,7 +33,6 @@ app.use(function(req, res, next) {
 });
 
 var mongoose = require('mongoose');
-
 var mongoDB = 'mongodb://Pranav:password@ds121696.mlab.com:21696/users';
 mongoose.connect(mongoDB, {
   useMongoClient: true

@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src='/socket.io/socket.io.js'></script>
+  <script type="text/javascript">
+  	var socket = io('http://localhost:3000');
+  	$(document).ready(function() {
+  		$("#add-proj").submit(function(e) {
+  			e.preventDefault();
+  			var name = $('#name').val();
+  			var link = $('#link').val();
+  			var parts = $('#parts').val();
+  			socket.emit('new-proj', {name: name, link: link, parts: parts});
+  		});
+  	});
+  </script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Modal Example</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+	      <form id="add-proj">
+			  <div class="form-group">
+			    <label for="Name">Enter Name of Project</label>
+			    <input type="email" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Enter Link to Project</label>
+			    <input type="password" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
+			    <input type="password" class="form-control" id="parts" placeholder="e.g. Arduino, Servo motor, ...">
+			  </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>	      	
+	      </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+</body>
 </html>
+
