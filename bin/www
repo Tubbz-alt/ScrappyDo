@@ -43,6 +43,8 @@ var findWord = function(word) {
 }
 
 io.on('connection', function(socket) {
+  socket.on('addImage', function(fileData) {
+  });  
   socket.on('new-proj', function(data) {
     console.log(data);
     Project.create({parts: data.parts, name: data.name, link: data.link});
@@ -53,7 +55,9 @@ io.on('connection', function(socket) {
       findWord(part);
     }
   });
-  
+  Project.find({}, function(err, projects) {
+    socket.emit('projects', projects);
+  });
 });
 
 server.on('error', onError);
