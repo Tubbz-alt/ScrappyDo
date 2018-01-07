@@ -35,7 +35,8 @@ $('#uploadPic').on('change', 'input[type="file"]', function(e) {
     });     
 });         
 
-button.addEventListener('click', function () {
+button.addEventListener('click', function (e) {
+    e.preventDefault();
     var file = fileChooser.files[0];
 
     if (file) {            
@@ -50,7 +51,8 @@ button.addEventListener('click', function () {
             if (err) {
                 results.innerHTML = ("Error uploading data: ", err);
             } else {
-                results.innerHTML = ("Successfully uploaded data");
+
+                //results.innerHTML = ("Successfully uploaded data");
 
                 document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
                 document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');

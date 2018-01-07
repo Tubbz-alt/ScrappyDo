@@ -203,7 +203,18 @@
         </div>
         <div class="modal-body">
            <form id="upload-img">
+            <div>
+              <h3>Uploading to Rekognition</h3>
+               <input type="file" id="file-chooser" />
+                  <button id="upload-button">Indentify!</button>
+                  
+                  <img class = "upload_img" id="myLink" name="inputLink"><br>
 
+                  <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
+
+                  <div id="results"></div>    
+                  <script type="text/javascript" src='./upload.js'>  </script>   
+              </div>
            </form>
         </div>
         <div class="modal-footer">
@@ -221,19 +232,8 @@
 
 </div>
 
-<div>
-<h3>Uploading to Rekognition</h3>
- <input type="file" id="file-chooser" />
-    <button id="upload-button">Indentify!</button>
-    
-    <img id="myLink" name="inputLink"><br>
 
-    <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
-    <div id="results">No error</div>    
-    <script type="text/javascript" src='./upload.js'>  </script>   
-    
-</div>
 <div id="myDropdown" class="dropdown">
 <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
 </div>
