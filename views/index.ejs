@@ -142,7 +142,10 @@
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
 			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-			  <label class="btn btn-default btn-file" >Upload an Image<input type="file" style="display: none;"></label>
+			  <label class="btn btn-success btn-file" >Upload an Image<input type="file" style="display: none;"></label>
+			  <div>
+			  	<img src="" id="pic" class="hidden" style="padding-top:10px; width: 150px; height: auto;">
+			  </div>
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>	      	
 	      </form>
@@ -185,24 +188,24 @@
 			var reader = new FileReader();
 			reader.onloadend = function() {
 			}
-		    var file = fileData.file;
-		    var name = fileData.name;
-
-		    var data = {Bucket: 'pennbook-my-images',
+		    var data = {
+		    			Bucket: 'pennbook-my-images',
 						Key: name,        
 		    			ContentType: file.type,
                     	Body: file,
-                    	ACL: 'public-read'};
+                    	ACL: 'public-read'
+                    };
 		    s3.putObject(data, function(err, data) {
 		      console.log('putting object in ' + name);
 		      if(err) {
 		        console.log(err);
 		      } else {
 		        var urlParams = {Bucket: 'pennbook-my-images', Key: name};
-		        s3Bucket.getSignedUrl('getObject', urlParams, function(err, url){
-		            socket.emit('url', url);
+		        s3.getSignedUrl('getObject', urlParams, function(err, url){
+		            console.log(url);
+		            $("#pic").attr("src", url);
+		            $("#pic").removeClass("hidden");
 		        });           
-		        console.log(data);
 		      }
 		    });		
 		});	        
