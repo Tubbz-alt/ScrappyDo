@@ -99,7 +99,7 @@
         document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
         var effect = $(this).data('effect');
         $(this).closest('.panel')[effect]();
-        var id = "#123" + part.split(' ').join('_').toLowerCase();
+        var id = ".123" + part.split(' ').join('_').toLowerCase();
         console.log(id);
         $(id).removeClass("list-group-item-success");
         $(id).addClass("list-group-item-danger");        
@@ -160,7 +160,7 @@
   }
   socket.on('recs', function (recommendations) {
     console.log(recommendations);
-  }) 
+  }); 
 
   </script>
 </head>

@@ -64,9 +64,10 @@ io.on('connection', function(socket) {
     filterParts = data.filterParts;
     var length = filterParts.length;
 
-    Project.find({"parts": {$in:filterParts}}, function(projects) {
-      socket.emit('recs', projects);
-    })
+    Project.find({parts: filterParts}, function(projects) {
+      console.log(projects);
+      // socket.emit('recs', projects);
+    });
 
   });
   
