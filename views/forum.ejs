@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-    <script src='/socket.io/socket.io.js'></script>
-    <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
-    <script type="text/javascript">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.19.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src='/socket.io/socket.io.js'></script>
+  <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+  <script type='text/javascript' src='./config.js'></script> <!-- This holds the AWS Credentials -->
+  <!-- <script src="typeahead.min.js"></script> may or may not need-->
+  <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quicksand">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Dosis">
+  <link href="https://fonts.googleapis.com/css?family=Joti+One" rel="stylesheet">
+  <script type="text/javascript">
     	var socket = io('http://localhost:8081');
     	var currTopic = "";
     	var makeTopic = function(name) {
@@ -113,29 +122,24 @@
   </head>
   <body>
 
-<nav class="navbar navbar-light">
+<nav class="navbar navbar-transparent" style="background-color: transparent; padding: 10px 0px;">
         <ul class="nav">
           <li class="navbar-header">
-            <img src="scrappy.png" id = "logo" alt="Flowers in Chania">
+            <img src="scrappy.png" id = "logo" style = "padding: 10px 30px -5px; ">
           </li>
 
             <li class="navbar-header">
-              <span class="nav_test navbar-text" id = "nav_test" style="">ScrappyDo</span>
+              <span class="nav_test navbar-text" id = "nav_test" style="font-family: 'Joti One'; font-size: 27px">ScrappyDo</span>
             </li>
-<!--             <li>
-                <p class="navbar-btn">
-                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition" style="margin-right:8px">Help me identify this part</a>
-                </p>
-            </li>
+
             <li>
                 <p class="navbar-btn">
-                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Add_Project_Modal" style="position: absolute; right: 15px;">Add New Project</a>
+                    <a type="button" href="../" class="btn btn-info btn-lg" style="position: absolute; right: 40px;">Home</a>
                 </p>
-            </li> -->
+            </li>
 
         </ul>
 </nav>
-
 
   	<div class="col-lg-4">
   		<h3 style="text-align:center;">Browse Project Forums Below</h3>
