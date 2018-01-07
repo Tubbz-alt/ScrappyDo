@@ -8,6 +8,7 @@ var http = require('http');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var forum = require('./routes/forum');
 
 var app = express();
 var routes = require('./routes/routes.js');
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/forum', forum);
 
 // Component Searching
 app.get('/search', routes.search);

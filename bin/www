@@ -9,6 +9,7 @@ var debug = require('debug')('porkfolio:server');
 var http = require('http');
 var Project = require('../models/ProjectsDB').Project;
 var Parts = require('../models/PartsDB').Parts;
+var Post = require('../models/PostDB').Post;
 var stemmer = require('porter-stemmer').stemmer;
 
 /**
@@ -62,6 +63,22 @@ io.on('connection', function(socket) {
     });
 
   });
+  socket.on('get-posts', function(topic) {
+    var folder = topic.topic;
+    Post.find({folder: folder}, function(err, questions) {
+      socket.emit('questions', questions);
+    });
+  });
+
+  socket.on('new-ans', function(data) {
+    Post.find({question: data.question}, function(err, questions) {
+      questions[0].answers.push(data.answer);
+      questions[0].save(function(err) {
+        if(err) console.log(err);
+      });
+    });
+    io.emit('heres-ans', data);
+  });
   // Project.remove({parts: []}, function(err, empty) {
     
   // });
@@ -84,6 +101,10 @@ io.on('connection', function(socket) {
     Project.find({}, function(err, projects) {
       socket.emit('projects', projects);
     });
+  });
+  socket.on('new-q', function(q) {
+    console.log(q);
+    Post.create({email: q.email, folder: q.folder, question: q.question});
   });
   // socket.on('update-recs', function(data) {
   //   filterParts = data.filterParts;
