@@ -66,12 +66,9 @@
   		});
   		socket.on('projects', function(projects) {
   			for(var proj in projects) {
-  				console.log(projects[proj]);
-  			}
-			// var test = ["test1", "ab", "NEWTHING", "WOW"];
-			// for(var i = 0; i < 4; i++) {
-			// 	$("#myDropdown").append('<a href=\" ' + test[i] + ' ">' + test[i] + '</a>');
-			// }	    			
+  				var project = projects[proj];
+				$("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
+  			}    			
   		});
   		$("#newPart").keypress(function(e) {
   			if(e.which == 13) {
@@ -141,7 +138,7 @@
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
 			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-
+			  <label class="btn btn-default btn-file" >Upload an Image<input type="file" style="display: none;"></label>
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>	      	
 	      </form>
@@ -166,10 +163,45 @@
     <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
     <div id="results">No error</div>    
-    <script type="text/javascript">    
+    <script type="text/javascript">  
+	    AWS.config.update({
+	        "accessKeyId": config.MY_KEY,
+	        "secretAccessKey": config.SECRET_KEY,
+	        "region": "us-east-1"
+	    });
+	    var s3 = new AWS.S3();      
         var fileChooser = document.getElementById('file-chooser');
         var button = document.getElementById('upload-button');
         var results = document.getElementById('results');
+
+		$(document).on('change', 'input[type="file"]', function(e) {
+			var name = $('#name').val();
+			var file = e.target.files[0];
+			var fileName = e.target.files[0].name;
+			var reader = new FileReader();
+			reader.onloadend = function() {
+			}
+		    var file = fileData.file;
+		    var name = fileData.name;
+
+		    var data = {Bucket: 'pennbook-my-images',
+						Key: name,        
+		    			ContentType: file.type,
+                    	Body: file,
+                    	ACL: 'public-read'};
+		    s3.putObject(data, function(err, data) {
+		      console.log('putting object in ' + name);
+		      if(err) {
+		        console.log(err);
+		      } else {
+		        var urlParams = {Bucket: 'pennbook-my-images', Key: name};
+		        s3Bucket.getSignedUrl('getObject', urlParams, function(err, url){
+		            socket.emit('url', url);
+		        });           
+		        console.log(data);
+		      }
+		    });		
+		});	        
 
         button.addEventListener('click', function () {
             var file = fileChooser.files[0];
@@ -179,12 +211,6 @@
             }
 
             if (file) {            
-                AWS.config.update({
-                    "accessKeyId": config.MY_KEY,
-                    "secretAccessKey": config.SECRET_KEY,
-                    "region": "us-east-1"
-                });
-                var s3 = new AWS.S3();
                 var params = {
                     Bucket: 'pennbook-my-images',
                     Key: file.name, //file.name,
@@ -223,13 +249,6 @@
 </div>
 <div id="myDropdown" class="dropdown">
 <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-	<a class="dropdown-item" href="#about">About</a>
-	<a class="dropdown-item" href="#base">Base</a>
-	<a class="dropdown-item" href="#blog">Blog</a>
-	<a class="dropdown-item" href="#contact">Contact</a>
-	<a class="dropdown-item" href="#custom">Custom</a>
-	<a class="dropdown-item" href="#support">Support</a>
-	<a class="dropdown-item" href="#tools">Tools</a>
 </div>
 </body>
 </html>
