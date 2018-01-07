@@ -46,9 +46,9 @@
     	var chooseType = function(jawn) {
     		var id = jawn.split(' ').join('_').toLowerCase()
 	     	if(filterParts.includes(jawn)) {
-	     		return "<li id='123"+id+"' class='list-group-item list-group-item-success'>"+jawn+"</li>\n";
+	     		return "<li class='list-group-item list-group-item-success 123"+id+"'>"+jawn+"</li>\n";
 	     	} else {
-	     		return "<li id='123"+id+"' class='list-group-item list-group-item-danger'>"+jawn+"</li>\n";
+	     		return "<li class='list-group-item list-group-item-danger 123"+id+"'>"+jawn+"</li>\n";
 	     	}
     	}
 	    var forWithCallback = function(parts, callback) {
@@ -132,7 +132,7 @@
             document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
             $("#tags").append(html);
             $("#newPart").val("");
-            var id = "#123" + part.split(' ').join('_').toLowerCase();
+            var id = ".123" + part.split(' ').join('_').toLowerCase();
             console.log(id);
             $(id).addClass("list-group-item-success");
             $(id).removeClass("list-group-item-danger");
