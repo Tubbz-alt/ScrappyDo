@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Project Finder</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,6 +9,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src='/socket.io/socket.io.js'></script>
+  <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+  <script type='text/javascript' src='./config.js'></script> <!-- This holds the AWS Credentials -->
+  <!-- <script src="typeahead.min.js"></script> may or may not need-->
   <script type="text/javascript">
   	var socket = io('http://localhost:3000');
   	var makePart = function(part) {
@@ -38,7 +41,11 @@
 
 <div class="container" style="padding:10px">
 	<div class="left col-lg-3">
-		<input type="text" class="form-control" id="newPart">
+
+        <div id="bloodhound">
+		  <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
+        </div>
+
   		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
   		<div id="tags">
   			
@@ -110,8 +117,8 @@
 
             if (file) {            
                 AWS.config.update({
-                    "accessKeyId": "AKIAIIHOMX3X4GFXZALA",
-                    "secretAccessKey": "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",
+                    "accessKeyId": config.MY_KEY,
+                    "secretAccessKey": config.SECRET_KEY,
                     "region": "us-east-1"
                 });
                 var s3 = new AWS.S3();
