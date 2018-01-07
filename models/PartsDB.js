@@ -12,20 +12,20 @@ var partsSchema = new Schema({
 
 var Parts = mongoose.model('Parts', partsSchema);
 
-var parts = ["Wheels","Bearings","Connecting Rods","Goods Holder Frame","Handle Rods",
-"Support Rods","Mounts","Brackets","Supporting Frame","Joints","Screws", "small wooden shapes", "nails",
-"Hot glue gun","Hammer","Screwdriver","Washable paint","Paint brushes","Vice","clamps","Hand drill",
-"Raspberry Pi","Camera","Buzzer","LEDs","LCD Display","Resistors","Capacitors","Diodes",
-"PIC16F8 series microcontroller","Transformer","IR LEDs","Transistors","Voltage Regulator","Photodiodes",
-"PIC Microcontroller","LCD","Ultrasonic module","Servo Motor","Crystal", "Vehicle Body", "Hand Glove",
-"Accelerometer","RF module","Encoder","Decoder","Atmega 328 Microcontroller","Motor driver IC","DC motors",
-"Rectifier","Regulator","Alcohol Sensor","GSM Modem","Motor","Power Supply","Speaker","Raspberry Pi 3",
-"Bluetooth Module","Android Application Device","Relay Driver","Lamps","Energy Meter","12V Transformer",
-"Loads","Push Buttons","Arduino","Solar Panel","Solar Panel Mount","Stepper Motor","Arduino uno",
-"Connectors","Cables","Pulley","Rubber Belts","Bed Frame","Temperature Sensor","Light Sensor","Voltage Sensor",
-"Current Sensor","Peizo Electric Sensors","Multimeter","Footstep Body","Mobile Charger","GPS Module",
-"RFID Reader","8051 Microcontroller","Gas Valve Motor","Exhaust Fan","9v Battery","Atmega Microcontroller",
-"Ultrasonic module obstacle","Moisture Sensor","Touch Screen Display","Rf Transmitter","Rf Receiver"];
+var parts = ["wheels","bearings","connecting rods","goods holder frame","handle rods",
+"support rods","mounts","brackets","supporting frame","joints","screws", "small wooden shapes", "nails",
+"hot glue gun","hammer","screwdriver","washable paint","paint brushes","vice","clamps","hand drill",
+"raspberry pi","camera","buzzer","leds","lcd display","resistors","capacitors","diodes",
+"pic16f8 series microcontroller","transformer","ir leds","transistors","voltage regulator","photodiodes",
+"pic microcontroller","lcd","ultrasonic module","servo motor","crystal", "vehicle body", "hand glove",
+"accelerometer","rf module","encoder","decoder","atmega 328 microcontroller","motor driver ic","dc motors",
+"rectifier","regulator","alcohol sensor","gsm modem","motor","power supply","speaker","raspberry pi 3",
+"bluetooth module","android application device","relay driver","lamps","energy meter","12v transformer",
+"loads","push buttons","arduino","solar panel","solar panel mount","stepper motor","arduino uno",
+"connectors","cables","pulley","rubber belts","bed frame","temperature sensor","light sensor","voltage sensor",
+"current sensor","peizo electric sensors","multimeter","footstep body","mobile charger","gps module",
+"rfid reader","8051 microcontroller","gas valve motor","exhaust fan","9v battery","atmega microcontroller",
+"ultrasonic module obstacle","moisture sensor","touch screen display","rf transmitter","rf receiver"];
 
 // for (var s in parts) {
 // 	Parts.create({name: parts[s], stemmed: stemmer(parts[s].toLowerCase())}, function(err, data) {
