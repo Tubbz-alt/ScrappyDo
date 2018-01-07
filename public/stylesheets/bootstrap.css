@@ -9,6 +9,12 @@
   overflow: auto;
 }
 
+#component-count {
+  color: white;
+  font-weight: 900;
+  font-family: Quicksand;
+}
+
 #logo {
   max-height: 70px;
   max-width: 70px;
@@ -21,13 +27,17 @@
   overflow-y: auto;
 }
 
+.navbar-btn{
+  background-color: transparent;
+}
+
 .hidden {
   display: none;
 }
 
 .scroll_box{
   width: auto;
-  height: 540px;
+  height: 580px;
   overflow:auto;
 }
 
@@ -156,7 +166,7 @@ html {
 }
 body {
   margin: 0;
-  background-image: url("http://avillahouse.co.za/wp-content/uploads/2016/09/whitewashed-wood-background.jpg");
+  background-image: url("https://res.cloudinary.com/hhberclba/image/upload/v1502865364/room/5993e68d41ec3201007d0386.jpg");
   background-repeat: repeat;
   overflow-y: hidden;
 }
@@ -3552,8 +3562,10 @@ fieldset[disabled] .btn-success.focus {
 }
 .btn-info {
   color: #fff;
-  background-color: #5bc0de;
+  font-family: Dosis;
+  background-color: transparent;
   border-color: #46b8da;
+
 }
 .btn-info:focus,
 .btn-info.focus {
