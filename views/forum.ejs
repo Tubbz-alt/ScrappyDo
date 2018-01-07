@@ -46,17 +46,6 @@
 		      socket.emit('get-posts', {topic: $(this).attr('id')});
 		    });
 
-		    $("#add-q").submit(function(e) {
-		    	e.preventDefault();
-		    	var folder = $("#folder").val();
-		    	var email = $("#email").val();
-		    	var question = $("#question").val();
-		    	$("#folder").val('');
-		    	$("#email").val('');
-		    	$("#question").val('');
-		    	socket.emit('new-q', {folder: folder, email: email, question: question});
-		    	$("#Add_Question_Modal").modal('hide');
-		    });
 		    $(document).on('submit', '.answer', function(e) {
 		    	e.preventDefault();
 		    	var question = $(this).closest('.panel')[0];
@@ -138,7 +127,7 @@
 
 
   	<div class="col-lg-4">
-  		<h3 style="text-align:center;">Browse Project Forums Below</h3>
+  		<h3 style="text-align:center; color: white;">Browse Project Forums Below</h3>
         <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#Add_Question_Modal" style="width: 100%; margin-bottom: 10px;">Post A Question</a>
   		<ul id="allTopics" class="list-group topics" style="">
   			

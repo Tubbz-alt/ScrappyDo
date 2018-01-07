@@ -8,7 +8,7 @@ var fileChooser = document.getElementById('file-chooser');
 var button = document.getElementById('upload-button');
 var results = document.getElementById('results');
 
-$('#uploadPic').on('change', 'input[type="file"]', function(e) {
+$(document).on('change', 'input[type="file"].uploadPic', function(e) {
     var name = $('#name').val();
     var file = e.target.files[0];
     var fileName = e.target.files[0].name;
@@ -27,10 +27,20 @@ $('#uploadPic').on('change', 'input[type="file"]', function(e) {
         console.log(err);
       } else {
         var urlParams = {Bucket: 'pennbook-my-images', Key: name};
-        s3Bucket.getSignedUrl('getObject', urlParams, function(err, url){
-            socket.emit('url', url);
+        s3.getSignedUrl('getObject', urlParams, function(err, url){
+            $("#add-proj").submit(function(e) {
+                e.preventDefault();
+                var name = $('#name').val();
+                var link = $('#link').val();
+                var stringParts = $('#parts').val();
+                $('#name').val('');
+                $('#link').val('');
+                $('#parts').val('');
+                var parts = stringParts.split(",");
+                socket.emit('new-proj', {name: name, link: link, parts: parts, url: url});
+                $('#Add_Project_Modal').modal('toggle');
+            });
         });           
-        console.log(data);
       }
     });     
 });         

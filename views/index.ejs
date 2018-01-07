@@ -111,15 +111,6 @@
         updateRecs();
         document.getElementById("newPart").innerHTML = "";
       });
-      $("#add-proj").submit(function(e) {
-        e.preventDefault();
-        var name = $('#name').val();
-        var link = $('#link').val();
-        var stringParts = $('#parts').val();
-        var parts = stringParts.split(",");
-        socket.emit('new-proj', {name: name, link: link, parts: parts});
-        $('#myModal').modal('toggle');
-      });
       socket.on('projects', function(projects) {
         for(var proj in projects) {
           var project = projects[proj];
@@ -279,7 +270,7 @@
               <div class="form-group">
                 <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
                 <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-              <label class="btn btn-default btn-file uploadPic" >Upload an Image<input id='uploadPic' type="file" style="display: none;"></label>
+              <label class="btn btn-default btn-file" >Upload an Image<input class='uploadPic' type="file" style="display: none;"></label>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>         
           </form>
@@ -318,7 +309,7 @@
                   <br>
                   <br>
                   <div id="options"></div>
-                  <script type="text/javascript" src='./upload.js'>  </script>   
+                  <script type="text/javascript" src='./upload.js'></script>   
               </div>
            </form>
         </div>
