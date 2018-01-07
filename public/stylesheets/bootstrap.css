@@ -13,6 +13,12 @@
   display: none;
 }
 
+.scroll_box{
+  width: auto;
+  height: 600px;
+  overflow:auto;
+}
+
 .upload_img {
   display: block;
   max-width:300px;
