@@ -41,6 +41,48 @@
   <script type="text/javascript">
     var socket = io('http://localhost:3000');
     var filterParts = [];
+    var makeProject = function(project) {
+    	var chooseType = function(jawn) {
+    		var id = jawn.split(' ').join('_').toLowerCase()
+	     	if(filterParts.includes(jawn)) {
+	     		return "<li id='123"+id+"' class='list-group-item list-group-item-success'>"+jawn+"</li>\n";
+	     	} else {
+	     		return "<li id='123"+id+"' class='list-group-item list-group-item-danger'>"+jawn+"</li>\n";
+	     	}
+    	}
+	    var forWithCallback = function(parts, callback) {
+	    	var finished = "";
+		    for(var part in parts) {
+		     	var jawn = parts[part];
+		     	finished+=chooseType(jawn);
+		    }
+		    callback(finished);	
+	    }
+    	forWithCallback(project.parts, function(parts) {
+			 var html = "<div class='row'>" + 
+			  "<div class='col-md-12'>" + 
+			    "<div class='thumbnail' style='padding-top: 20px;'>" + 
+			    	"<div class='col-md-4'>" + 
+					    "<a href='http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg'>" + 
+					    	"<img src='"+project.image+"' alt='Lights' style='width:100%;'>" + 
+					    "</a>" + 
+				        "<div class='caption'>" + 
+				          "<h2>"+project.name+"</h2>" + 
+				        "</div>" + 	    		
+			    	"</div>" + 
+			    	"<div class='col-md-8'>" + 
+				        "<div>" + 
+				          "<ul class='list-group'>" + parts + 
+				          "</ul>" + 
+				        "</div>" + 	    		
+			    	"</div>" + 
+			    "</div>" + 
+			  "</div>" + 
+			"</div>"
+			$("#allProjects").append(html);
+	    	return html; 
+    	});
+    }
     var makePart = function(part) {
       var html =  "<div class='panel panel-default' id="+part.split(' ').join('_')+">" + 
         "<div class='panel-body'>" + part + "<span class='pull-right clickable' data-effect='fadeOut'><i class='fa fa-times'></i></span>" +
@@ -55,6 +97,10 @@
         if(index > -1) filterParts.splice(index, 1);
         var effect = $(this).data('effect');
         $(this).closest('.panel')[effect]();
+        var id = "#123" + part.split(' ').join('_').toLowerCase();
+        console.log(id);
+        $(id).removeClass("list-group-item-success");
+        $(id).addClass("list-group-item-danger");        
         document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
         updateRecs();
         document.getElementById("newPart").innerHTML = "";
@@ -71,7 +117,9 @@
       socket.on('projects', function(projects) {
         for(var proj in projects) {
           var project = projects[proj];
-        $("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
+          var html = makeProject(project);
+          // $("#allProjects").append(html);
+          $("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
         }         
       });
       $("#newPart").keypress(function(e) {
@@ -83,6 +131,10 @@
             document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
             $("#tags").append(html);
             $("#newPart").val("");
+            var id = "#123" + part.split(' ').join('_').toLowerCase();
+            console.log(id);
+            $(id).addClass("list-group-item-success");
+            $(id).removeClass("list-group-item-danger");
             updateRecs();
           }
         }
@@ -103,17 +155,17 @@
       }
   }   
   function updateRecs() {
-    var length = filterParts.length;
-    Project.createIndex({"parts":"text"})
+    // var length = filterParts.length;
+    // Project.createIndex({"parts":"text"})
     
-    var match = length;
-    var terms = filterParts.join(" ");
-    Project.aggregate([
-     { $match: { $text: { $search: terms } } },
-     { $project: {"parts":1, score: {$meta: "textScore"}}},
-     { $sort: { score: 1 }},
-     { $match: { score: { $gte: match } } }
-    ])
+    // var match = length;
+    // var terms = filterParts.join(" ");
+    // Project.aggregate([
+    //  { $match: { $text: { $search: terms } } },
+    //  { $project: {"parts":1, score: {$meta: "textScore"}}},
+    //  { $sort: { score: 1 }},
+    //  { $match: { score: { $gte: match } } }
+    // ])
   }
   </script>
 </head>
@@ -155,6 +207,28 @@
         </div>
     </div>
     <div class="left col-lg-9">
+    <div id="allProjects">
+<!-- 	  <div class="col-md-4">
+	    <div class="thumbnail">
+	      <a href="http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg">
+	        <img src="http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg" alt="Nature" style="width:100%">
+	        <div class="caption">
+	          <p>Lorem ipsum...</p>
+	        </div>
+	      </a>
+	    </div>
+	  </div>
+	  <div class="col-md-4">
+	    <div class="thumbnail">
+	      <a href="http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg">
+	        <img src="http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg" alt="Fjords" style="width:100%">
+	        <div class="caption">
+	          <p>Lorem ipsum...</p>
+	        </div>
+	      </a>
+	    </div>
+	  </div> -->
+	</div>
     </div>  
   <!-- Trigger the modal with a button -->
 
