@@ -53,6 +53,7 @@
             var part = $(this).parent().closest('.panel').attr('id');
             var index = filterParts.indexOf(part);
             if(index > -1) filterParts.splice(index, 1);
+            document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
             var effect = $(this).data('effect');
             $(this).closest('.panel')[effect]();
         });
@@ -77,6 +78,7 @@
                 if (part.length != 0 && !filterParts.includes(part.toLowerCase())) {
                     var html = makePart(part);
                     filterParts.push(part.split(' ').join('_').toLowerCase());
+                    document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
                     $("#tags").append(html);
                     $("#newPart").val("");
                 }
@@ -122,7 +124,7 @@
 <div class="container" style="padding:10px">
     <div class="left col-lg-3">
 
-        <h1 class="md-toolbar-tools">Your Components</h1>
+        <h1 id="component-count" class="md-toolbar-tools">Your Components (0)</h1>
         <div id="bloodhound">
             <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
         </div>
