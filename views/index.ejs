@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Project Finder</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,6 +10,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src='/socket.io/socket.io.js'></script>
+  <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+  <script type='text/javascript' src='./config.js'></script> <!-- This holds the AWS Credentials -->
+  <!-- <script src="typeahead.min.js"></script> may or may not need-->
   <script type="text/javascript">
   	var socket = io('http://localhost:3000');
   	var makePart = function(part) {
@@ -43,7 +46,11 @@
 
 <div class="container" style="padding:10px">
 	<div class="left col-lg-3">
-		<input type="text" class="form-control" id="newPart">
+
+        <div id="bloodhound">
+		  <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
+        </div>
+
   		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
   		<div id="tags">
   			
@@ -92,29 +99,31 @@
 </div>
 
 <div>
-<h2> Uploading to Rekognition... input will be output in client console log </h2>
+<h3>Uploading to Rekognition</h3>
  <input type="file" id="file-chooser" />
-    <button id="upload-button">Upload to S3</button>
+    <button id="upload-button">Indentify!</button>
     
     <img id="myLink" name="inputLink"><br>
 
     <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
-    <div id="results"></div>
+    <div id="results">No error</div>
     <script type="text/javascript">    
         var fileChooser = document.getElementById('file-chooser');
         var button = document.getElementById('upload-button');
         var results = document.getElementById('results');
 
         button.addEventListener('click', function () {
-            var file = fileChooser.files[0];         
-            document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
-            document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+            var file = fileChooser.files[0];
+            if (file != null) {         
+                document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+                document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+            }
 
             if (file) {            
                 AWS.config.update({
-                    "accessKeyId": "AKIAI2LJH2SVWPTNQHJQ",
-                    "secretAccessKey": "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",
+                    "accessKeyId": config.MY_KEY,
+                    "secretAccessKey": config.SECRET_KEY,
                     "region": "us-east-1"
                 });
                 var s3 = new AWS.S3();
