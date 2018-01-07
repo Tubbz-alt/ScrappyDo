@@ -56,7 +56,14 @@
     		var effect = $(this).data('effect');
         	$(this).closest('.panel')[effect]();
   		});
-
+  		$("#add-proj").submit(function(e) {
+  			e.preventDefault();
+  			var name = $('#name').val();
+  			var link = $('#link').val();
+  			var parts = $('#parts').val();
+  			socket.emit('new-proj', {name: name, link: link, parts: parts});
+  			$('#myModal').modal('toggle');
+  		});
   		socket.on('projects', function(projects) {
   			for(var proj in projects) {
   				var project = projects[proj];
@@ -115,19 +122,19 @@
 
 
 <div class="container" style="padding:10px">
-    <div class="left col-lg-3">
+	<div class="left col-lg-3">
 
-        <h1 id="component-count" class="md-toolbar-tools">Your Components (0)</h1>
+        <h1 class="md-toolbar-tools">Your Components</h1>
         <div id="bloodhound">
-            <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
+		    <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
         </div>
       
-        <div id="tags">
-            
-        </div>
-    </div>
-    <div class="left col-lg-9">
-    </div>  
+  		<div id="tags">
+  			
+  		</div>
+	</div>
+	<div class="left col-lg-9">
+	</div>	
   <!-- Trigger the modal with a button -->
 
   <!-- Add Project Modal -->
@@ -153,10 +160,7 @@
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
 			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-			  <label class="btn btn-success btn-file" >Upload an Image<input type="file" style="display: none;"></label>
-			  <div>
-			  	<img src="" id="pic" class="hidden" style="padding-top:10px; width: 150px; height: auto;">
-			  </div>
+			  <label class="btn btn-default btn-file" >Upload an Image<input type="file" style="display: none;"></label>
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>	      	
 	      </form>
@@ -181,7 +185,7 @@
         </div>
         <div class="modal-body">
            <form id="upload-img">
-            
+
            </form>
         </div>
         <div class="modal-footer">
@@ -205,9 +209,11 @@
 
     <div id="results">No error</div>    
     <script type="text/javascript" src='./upload.js'>  </script>   
+    
 </div>
 <div id="myDropdown" class="dropdown">
 <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
 </div>
 </body>
 </html>
+
