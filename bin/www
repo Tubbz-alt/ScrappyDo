@@ -35,7 +35,9 @@ io.on('connection', function(socket) {
     console.log(data);
     Project.create({parts: data.parts, name: data.name, link: data.link});
   });
-  
+  Project.find({}, function(err, projects) {
+    socket.emit('projects', projects);
+  });
 });
 
 server.on('error', onError);
