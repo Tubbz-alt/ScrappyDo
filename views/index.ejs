@@ -62,11 +62,10 @@
     	forWithCallback(project.parts, function(parts) {
 			 var html = "<div class='row'>" + 
 			  "<div class='col-md-12'>" + 
-			    "<div class='thumbnail' style='padding-top: 20px;'>" + 
-			    	"<div class='col-md-4'>" + 
-					    "<a href='http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg'>" + 
-					    	"<img src='"+project.image+"' alt='Lights' style='width:100%;'>" + 
-					    "</a>" + 
+          "<a href='" + project.link + "'>" + 
+			      "<div class='thumbnail' style='padding-top: 20px;'>" + 
+			    	  "<div class='col-md-4'>" + 
+					    	"<img src='"+project.image+"' alt='Lights' style='width:100%;'>" +  
 				        "<div class='caption'>" + 
 				          "<h2>"+project.name+"</h2>" + 
 				        "</div>" + 	    		
@@ -76,8 +75,9 @@
 				          "<ul class='list-group'>" + parts + 
 				          "</ul>" + 
 				        "</div>" + 	    		
-			    	"</div>" + 
-			    "</div>" + 
+			    	  "</div>" + 
+			      "</div>" + 
+          "</a>" +
 			  "</div>" + 
 			"</div>"
 			$("#allProjects").append(html);
