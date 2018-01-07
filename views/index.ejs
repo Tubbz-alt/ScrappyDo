@@ -17,6 +17,7 @@
   			var link = $('#link').val();
   			var parts = $('#parts').val();
   			socket.emit('new-proj', {name: name, link: link, parts: parts});
+  			$('#myModal').modal('toggle');
   		});
   	});
   </script>
@@ -42,15 +43,15 @@
 	      <form id="add-proj">
 			  <div class="form-group">
 			    <label for="Name">Enter Name of Project</label>
-			    <input type="email" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
+			    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Link to Project</label>
-			    <input type="password" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
+			    <input type="text" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
-			    <input type="password" class="form-control" id="parts" placeholder="e.g. Arduino, Servo motor, ...">
+			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>	      	
 	      </form>
