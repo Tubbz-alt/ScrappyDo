@@ -44,6 +44,9 @@ var findWord = function(word) {
 }
 
 io.on('connection', function(socket) {
+  Project.remove({parts: []}, function(err, empty) {
+    
+  });
   socket.on('addImage', function(fileData) {
   });  
   socket.on('new-proj', function(data) {
