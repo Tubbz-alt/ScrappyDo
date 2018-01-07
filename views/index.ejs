@@ -87,29 +87,31 @@
 </div>
 
 <div>
-<h2> Uploading to Rekognition... input will be output in client console log </h2>
+<h3>Uploading to Rekognition</h3>
  <input type="file" id="file-chooser" />
-    <button id="upload-button">Upload to S3</button>
+    <button id="upload-button">Indentify!</button>
     
     <img id="myLink" name="inputLink"><br>
 
     <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
-    <div id="results"></div>
+    <div id="results">No error</div>
     <script type="text/javascript">    
         var fileChooser = document.getElementById('file-chooser');
         var button = document.getElementById('upload-button');
         var results = document.getElementById('results');
 
         button.addEventListener('click', function () {
-            var file = fileChooser.files[0];         
-            document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
-            document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+            var file = fileChooser.files[0];
+            if (file != null) {         
+                document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+                document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+            }
 
             if (file) {            
                 AWS.config.update({
-                    "accessKeyId": "AKIAI2LJH2SVWPTNQHJQ",
-                    "secretAccessKey": "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",
+                    "accessKeyId": "AKIAIIHOMX3X4GFXZALA",
+                    "secretAccessKey": "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",
                     "region": "us-east-1"
                 });
                 var s3 = new AWS.S3();
