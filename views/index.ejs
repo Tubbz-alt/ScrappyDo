@@ -39,6 +39,7 @@
   </script>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <script type="text/javascript">
+
     var socket = io('http://localhost:3000');
     var filterParts = [];
     var makeProject = function(project) {
@@ -92,16 +93,16 @@
     }
     $(document).ready(function() {
       $(document).on('click', '.clickable', function() {
-        var part = $(this).parent().closest('.panel').attr('id');
+        var part = $(this).parent().closest('.panel').attr('id').toLowerCase();
         var index = filterParts.indexOf(part);
         if(index > -1) filterParts.splice(index, 1);
+        document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
         var effect = $(this).data('effect');
         $(this).closest('.panel')[effect]();
         var id = "#123" + part.split(' ').join('_').toLowerCase();
         console.log(id);
         $(id).removeClass("list-group-item-success");
         $(id).addClass("list-group-item-danger");        
-        document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
         updateRecs();
         document.getElementById("newPart").innerHTML = "";
       });
@@ -125,7 +126,7 @@
       $("#newPart").keypress(function(e) {
         if(e.which == 13) {
           var part = $("#newPart").val().trim();
-          if (part.length != 0 && !filterParts.includes(part.toLowerCase())) {
+          if (part.length != 0 && !filterParts.includes(part.split(' ').join('_').toLowerCase())) {
             var html = makePart(part);
             filterParts.push(part.split(' ').join('_').toLowerCase());
             document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
@@ -155,18 +156,12 @@
       }
   }   
   function updateRecs() {
-    // var length = filterParts.length;
-    // Project.createIndex({"parts":"text"})
-    
-    // var match = length;
-    // var terms = filterParts.join(" ");
-    // Project.aggregate([
-    //  { $match: { $text: { $search: terms } } },
-    //  { $project: {"parts":1, score: {$meta: "textScore"}}},
-    //  { $sort: { score: 1 }},
-    //  { $match: { score: { $gte: match } } }
-    // ])
+    socket.emit("update-recs", {filterParts: filterParts});
   }
+  socket.on('recs', function (recommendations) {
+    console.log(recommendations);
+  }) 
+
   </script>
 </head>
 <body>
@@ -186,7 +181,7 @@
             </li>
             <li>
                 <p class="navbar-btn">
-                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition">Get Parts From Image</a>
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition">Help me identify this part</a>
                 </p>
             </li>
         </ul>
@@ -276,20 +271,24 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Get Parts From Image</h4>
+          <h4 class="modal-title">Identifying a part</h4>
         </div>
         <div class="modal-body">
            <form id="upload-img">
             <div>
-              <h3>Uploading to Rekognition</h3>
+              <label>Upload an image</label>
                <input type="file" id="file-chooser" />
-                  <button id="upload-button">Indentify!</button>
-                  
+               <br>
                   <img class = "upload_img" id="myLink" name="inputLink"><br>
+                  <div id="results"></div>    
+                  <button type="button" class="btn btn-primary" id="upload-button">Identify!</button>
+                  
 
                   <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
-                  <div id="results"></div>    
+                  <br>
+                  <br>
+                  <div id="options"></div>
                   <script type="text/javascript" src='./upload.js'>  </script>   
               </div>
            </form>

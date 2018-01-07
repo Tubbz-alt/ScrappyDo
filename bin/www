@@ -33,22 +33,24 @@ var io = require('socket.io')(server);
 
 var findWord = function(word) {
   Parts.findOne({stemmed: stemmer(word.toLowerCase())}, function(err, docs) {
-    console.log(docs);
+    //console.log(docs);
     if (docs === [] || docs === null) {
           Parts.create({name: word, stemmed: stemmer(word.toLowerCase())}, function(error) {
             if (error) {console.log(error);}
       });
     }
   });
+
+
 }
 
 io.on('connection', function(socket) {
   socket.on('addImage', function(fileData) {
   });  
   socket.on('new-proj', function(data) {
-    console.log(data);
+    //console.log(data);
     Project.create({parts: data.parts, name: data.name, link: data.link, image: data.url});
-    console.log("parts: " + data.parts);
+    //console.log("parts: " + data.parts);
     var parts = data.parts;
     for (var s in parts) {
       var part = parts[s];
@@ -58,6 +60,16 @@ io.on('connection', function(socket) {
   Project.find({}, function(err, projects) {
     socket.emit('projects', projects);
   });
+  socket.on('update-recs', function(data) {
+    filterParts = data.filterParts;
+    var length = filterParts.length;
+
+    Project.find({"parts": {$in:filterParts}}, function(projects) {
+      socket.emit('recs', projects);
+    })
+
+  });
+  
 });
 
 server.on('error', onError);
@@ -99,11 +111,11 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      //console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      //console.error(bind + ' is already in use');
       process.exit(1);
       break;
     default:

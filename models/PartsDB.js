@@ -37,7 +37,6 @@ var parts = ["Wheels","Bearings","Connecting Rods","Goods Holder Frame","Handle 
 // }
 
 module.exports = {
-	Parts : Parts,
-    list : parts
+	Parts: Parts
 }
 
