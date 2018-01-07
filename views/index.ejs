@@ -3,9 +3,9 @@
 <head>
   <title>Project Finder</title>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.19.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,7 +13,8 @@
   <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
   <script type='text/javascript' src='./config.js'></script> <!-- This holds the AWS Credentials -->
   <!-- <script src="typeahead.min.js"></script> may or may not need-->
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
+
   <script type="text/javascript">
   	var socket = io('http://localhost:3000');
   	var filterParts = [];
@@ -39,8 +40,6 @@
   			var parts = $('#parts').val();
   			socket.emit('new-proj', {name: name, link: link, parts: parts});
   			$('#myModal').modal('toggle');
-<<<<<<< HEAD
-=======
   		});
   		$("#newPart").keypress(function(e) {
   			if(e.which == 13) {
@@ -50,9 +49,22 @@
   				$("#tags").append(html);
   				$("#newPart").val("");
   			}
->>>>>>> a7cca60ec58aa444491964d2ebcf8f4c05f5c8f2
   		});
   	});
+	function filterFunction() {
+	    var input, filter, ul, li, a, i;
+	    input = document.getElementById("myInput");
+	    filter = input.value.toUpperCase();
+	    div = document.getElementById("myDropdown");
+	    a = div.getElementsByTagName("a");
+	    for (i = 0; i < a.length; i++) {
+	        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+	            a[i].style.display = "";
+	        } else {
+	            a[i].style.display = "none";
+	        }
+	    }
+	}  	
   </script>
 </head>
 <body>
@@ -70,8 +82,7 @@
   		</div>
 	</div>
 	<div class="left col-lg-9">
-		
-	</div>
+	</div>	
   <!-- Trigger the modal with a button -->
 
   <!-- Modal -->
@@ -96,11 +107,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
-<<<<<<< HEAD
-			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-=======
 			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino, Servo motor, ...">
->>>>>>> a7cca60ec58aa444491964d2ebcf8f4c05f5c8f2
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>	      	
 	      </form>
@@ -124,7 +131,7 @@
 
     <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
-    <div id="results">No error</div>
+    <div id="results">No error</div>    
     <script type="text/javascript">    
         var fileChooser = document.getElementById('file-chooser');
         var button = document.getElementById('upload-button');
@@ -178,8 +185,26 @@
                 results.innerHTML = 'Nothing to upload.';
             }
         }, false);
-    </script>
+    </script>	
 </div>
+<div id="myDropdown" class="dropdown">
+<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+<div class="dropdown-menu">
+	<a class="dropdown-item" href="#about">About</a>
+	<a class="dropdown-item" href="#base">Base</a>
+	<a class="dropdown-item" href="#blog">Blog</a>
+	<a class="dropdown-item" href="#contact">Contact</a>
+	<a class="dropdown-item" href="#custom">Custom</a>
+	<a class="dropdown-item" href="#support">Support</a>
+	<a class="dropdown-item" href="#tools">Tools</a>
+</div>
+</div>
+<script> 
+	var test = ["test1", "ab", "NEWTHING", "WOW"];
+	for(var i = 0; i < 4; i++){
+		$("#myDropdown").append('<a href=\" ' + test[i] + ' ">' + test[i] + '</a>');
+	}	
+</script>
 </body>
 </html>
 
