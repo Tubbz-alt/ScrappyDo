@@ -16,6 +16,11 @@
     z-index: 1;
 }
 
+.nav_test {
+  color: white;
+  font-size: 25px;
+}
+
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
