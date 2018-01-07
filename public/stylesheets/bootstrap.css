@@ -5,8 +5,18 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+.thumbnail {
+  overflow: auto;
+}
+
 .hidden {
   display: none;
+}
+
+.scroll_box{
+  width: auto;
+  height: 600px;
+  overflow:auto;
 }
 
 .upload_img {

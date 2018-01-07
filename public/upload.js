@@ -67,7 +67,25 @@ button.addEventListener('click', function (e) {
                     if (err) {
                         console.log(err, err.stack); // an error occurred
                     } else { 
-                        console.log(data.Labels);
+                        // Get the top 3 options (or fewer) to prompt user
+                        var num_options = Math.min(5, data.Labels.length);
+                        $("#options").empty();
+                        $("#options").append("<h5> We think it is a...</h5>");
+                        for (var j = 0; j < num_options; j++) {
+                            $("#options").append( '<button type="button" class="btn btn-primary clickable-result" style="margin-right:8px">'
+                                + data.Labels[j].Name + "</button>" );
+                        }
+
+                        $(".clickable-result").on('click', function(e) {
+                            var part = $(this).text().trim();
+                            if (part.length != 0 && !filterParts.includes(part.split(' ').join('_').toLowerCase())) {
+                                var html = makePart(part);
+                                filterParts.push(part.toLowerCase().split(' ').join('_'));
+                                document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
+                                $("#tags").append(html);
+                                updateRecs();
+                            }
+                        });
                     }
                 });
             }
