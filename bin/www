@@ -80,16 +80,16 @@ io.on('connection', function(socket) {
   Project.find({}, function(err, projects) {
     socket.emit('projects', projects);
   });
-  socket.on('update-recs', function(data) {
-    filterParts = data.filterParts;
-    console.log(filterParts);
-    console.log("whatever the fuck we're searching is: " + filterParts);
-    Project.find({parts: {$in : filterParts}}, function(err, projects) {
-      console.log(projects);
-      // socket.emit('recs', projects);
-    });
+  // socket.on('update-recs', function(data) {
+  //   filterParts = data.filterParts;
+  //   console.log(filterParts);
+  //   console.log("whatever the fuck we're searching is: " + filterParts);
+  //   Project.find({parts: {$in : filterParts}}, function(err, projects) {
+  //     console.log(projects);
+  //     // socket.emit('recs', projects);
+  //   });
 
-  });
+  // });
   
 });
 
