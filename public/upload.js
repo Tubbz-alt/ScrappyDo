@@ -8,15 +8,13 @@ var fileChooser = document.getElementById('file-chooser');
 var button = document.getElementById('upload-button');
 var results = document.getElementById('results');
 
-$(document).on('change', 'input[type="file"]', function(e) {
+$('#uploadPic').on('change', 'input[type="file"]', function(e) {
     var name = $('#name').val();
     var file = e.target.files[0];
     var fileName = e.target.files[0].name;
     var reader = new FileReader();
     reader.onloadend = function() {
     }
-    var file = fileData.file;
-    var name = fileData.name;
 
     var data = {Bucket: 'pennbook-my-images',
                 Key: name,        
@@ -39,10 +37,6 @@ $(document).on('change', 'input[type="file"]', function(e) {
 
 button.addEventListener('click', function () {
     var file = fileChooser.files[0];
-    if (file != null) {         
-        document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
-        document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
-    }
 
     if (file) {            
         var params = {
@@ -57,6 +51,10 @@ button.addEventListener('click', function () {
                 results.innerHTML = ("Error uploading data: ", err);
             } else {
                 results.innerHTML = ("Successfully uploaded data");
+
+                document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+                document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
+
                 var rekognition = new AWS.Rekognition();
 
                 var searchParams = {
@@ -72,8 +70,6 @@ button.addEventListener('click', function () {
                 });
             }
         });
-
-
 
     } else {
         results.innerHTML = 'Nothing to upload.';

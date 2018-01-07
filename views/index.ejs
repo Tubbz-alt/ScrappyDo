@@ -39,61 +39,61 @@
   </script>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <script type="text/javascript">
-  	var socket = io('http://localhost:3000');
-  	var filterParts = [];
-  	var makePart = function(part) {
-  		var html = 	"<div class='panel panel-default' id="+part.split(' ').join('_')+">" + 
-		    "<div class='panel-body'>" + part + "<span class='pull-right clickable' data-effect='fadeOut'><i class='fa fa-times'></i></span>" +
-			"</div>" + 
-			"</div>";
-  		return html;
-  	}
-  	$(document).ready(function() {
-  		$(document).on('click', '.clickable', function() {
-  			var part = $(this).parent().closest('.panel').attr('id');
-  			var index = filterParts.indexOf(part);
-  			if(index > -1) filterParts.splice(index, 1);
-    		var effect = $(this).data('effect');
-        	$(this).closest('.panel')[effect]();
-  		});
-  		$("#add-proj").submit(function(e) {
-  			e.preventDefault();
-  			var name = $('#name').val();
-  			var link = $('#link').val();
-  			var parts = $('#parts').val();
-  			socket.emit('new-proj', {name: name, link: link, parts: parts});
-  			$('#myModal').modal('toggle');
-  		});
-  		socket.on('projects', function(projects) {
-  			for(var proj in projects) {
-  				var project = projects[proj];
-				$("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
-  			}    			
-  		});
-  		$("#newPart").keypress(function(e) {
-  			if(e.which == 13) {
-  				var part = $("#newPart").val();
-  				var html = makePart(part);
-  				filterParts.push(part.split(' ').join('_'));
-  				$("#tags").append(html);
-  				$("#newPart").val("");
-  			}
-  		});
-  	});
-	function filterFunction() {
-	    var input, filter, ul, li, a, i;
-	    input = document.getElementById("myInput");
-	    filter = input.value.toUpperCase();
-	    div = document.getElementById("myDropdown");
-	    a = div.getElementsByTagName("a");
-	    for (i = 0; i < a.length; i++) {
-	        if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-	            a[i].style.display = "";
-	        } else {
-	            a[i].style.display = "none";
-	        }
-	    }
-	}  	
+    var socket = io('http://localhost:3000');
+    var filterParts = [];
+    var makePart = function(part) {
+        var html =  "<div class='panel panel-default' id="+part.split(' ').join('_')+">" + 
+            "<div class='panel-body'>" + part + "<span class='pull-right clickable' data-effect='fadeOut'><i class='fa fa-times'></i></span>" +
+            "</div>" + 
+            "</div>";
+        return html;
+    }
+    $(document).ready(function() {
+        $(document).on('click', '.clickable', function() {
+            var part = $(this).parent().closest('.panel').attr('id');
+            var index = filterParts.indexOf(part);
+            if(index > -1) filterParts.splice(index, 1);
+            var effect = $(this).data('effect');
+            $(this).closest('.panel')[effect]();
+        });
+        $("#add-proj").submit(function(e) {
+            e.preventDefault();
+            var name = $('#name').val();
+            var link = $('#link').val();
+            var parts = $('#parts').val();
+            socket.emit('new-proj', {name: name, link: link, parts: parts});
+            $('#myModal').modal('toggle');
+        });
+        socket.on('projects', function(projects) {
+            for(var proj in projects) {
+                var project = projects[proj];
+                $("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
+            }               
+        });
+        $("#newPart").keypress(function(e) {
+            if(e.which == 13) {
+                var part = $("#newPart").val();
+                var html = makePart(part);
+                filterParts.push(part.split(' ').join('_'));
+                $("#tags").append(html);
+                $("#newPart").val("");
+            }
+        });
+    });
+    function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }   
   </script>
 </head>
 <body>
@@ -122,19 +122,19 @@
 
 
 <div class="container" style="padding:10px">
-	<div class="left col-lg-3">
+    <div class="left col-lg-3">
 
         <h1 class="md-toolbar-tools">Your Components</h1>
         <div id="bloodhound">
-		    <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
+            <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
         </div>
       
-  		<div id="tags">
-  			
-  		</div>
-	</div>
-	<div class="left col-lg-9">
-	</div>	
+        <div id="tags">
+            
+        </div>
+    </div>
+    <div class="left col-lg-9">
+    </div>  
   <!-- Trigger the modal with a button -->
 
   <!-- Add Project Modal -->
@@ -148,22 +148,22 @@
           <h4 class="modal-title">Add New Project</h4>
         </div>
         <div class="modal-body">
-	      <form id="add-proj">
-			  <div class="form-group">
-			    <label for="Name">Enter Name of Project</label>
-			    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Enter Link to Project</label>
-			    <input type="text" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
-			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-			  <label class="btn btn-default btn-file" >Upload an Image<input type="file" style="display: none;"></label>
-			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>	      	
-	      </form>
+          <form id="add-proj">
+              <div class="form-group">
+                <label for="Name">Enter Name of Project</label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Enter Link to Project</label>
+                <input type="text" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
+                <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
+              <label class="btn btn-default btn-file uploadPic" >Upload an Image<input id='uploadPic' type="file" style="display: none;"></label>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>         
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
