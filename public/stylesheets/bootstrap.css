@@ -9,6 +9,18 @@
   overflow: auto;
 }
 
+#logo {
+  max-height: 70px;
+  max-width: 70px;
+  width: auto;
+  height: auto;
+}
+
+#scrollable-dropdown-menu .tt-dropdown-menu {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
 .hidden {
   display: none;
 }

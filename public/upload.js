@@ -70,7 +70,7 @@ button.addEventListener('click', function (e) {
                         // Get the top 3 options (or fewer) to prompt user
                         var num_options = Math.min(5, data.Labels.length);
                         $("#options").empty();
-                        $("#options").append("<h5> We think it is a...</h5>");
+                        $("#options").append("<h5> The Mystery Gang thinks it is a...</h5>");
                         for (var j = 0; j < num_options; j++) {
                             $("#options").append( '<button type="button" class="btn btn-primary clickable-result" style="margin-right:8px">'
                                 + data.Labels[j].Name + "</button>" );
