@@ -9,6 +9,7 @@ var debug = require('debug')('porkfolio:server');
 var http = require('http');
 var Project = require('../models/ProjectsDB').Project;
 var Parts = require('../models/PartsDB').Parts;
+var stemmer = require('porter-stemmer').stemmer;
 
 /**
  * Get port from environment and store in Express.
@@ -30,10 +31,27 @@ var server = http.createServer(app);
 server.listen(port);
 var io = require('socket.io')(server);
 
+var findWord = function(word) {
+  Parts.findOne({stemmed: stemmer(word.toLowerCase())}, function(err, docs) {
+    console.log(docs);
+    if (docs === [] || docs === null) {
+          Parts.create({name: word, stemmed: stemmer(word.toLowerCase())}, function(error) {
+            if (error) {console.log(error);}
+      });
+    }
+  });
+}
+
 io.on('connection', function(socket) {
   socket.on('new-proj', function(data) {
     console.log(data);
     Project.create({parts: data.parts, name: data.name, link: data.link});
+    console.log("parts: " + data.parts);
+    var parts = (data.parts).split(",");
+    for (var s in parts) {
+      var part = parts[s];
+      findWord(part);
+    }
   });
   
 });

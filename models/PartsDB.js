@@ -1,11 +1,13 @@
 //Import the mongoose module
 var mongoose = require('mongoose');
+var stemmer = require('porter-stemmer').stemmer;
 
 //Define User Schema
 var Schema = mongoose.Schema;
 
 var partsSchema = new Schema({
-	name: String
+	name: String,
+	stemmed: String
 });
 
 var Parts = mongoose.model('Parts', partsSchema);
@@ -26,10 +28,10 @@ var parts = ["Wheels","Bearings","Connecting Rods","Goods Holder Frame","Handle 
 "Ultrasonic module obstacle","Moisture Sensor","Touch Screen Display","Rf Transmitter","Rf Receiver"];
 
 // for (var s in parts) {
-// 	Parts.create({name: parts[s]}, function(err, data) {
+// 	Parts.create({name: parts[s], stemmed: stemmer(parts[s].toLowerCase())}, function(err, data) {
 // 		if (err) {console.log(err);}
 // 		else {
-// 			console.log("added " + s);
+// 			console.log("added " + parts[s]);
 // 		}
 // 	});
 // }
