@@ -44,8 +44,8 @@
     var filterParts = [];
     var makeProject = function(project) {
     	var chooseType = function(jawn) {
-    		var id = jawn.split(' ').join('_').toLowerCase()
-	     	if(filterParts.includes(jawn)) {
+    		var id = jawn.split(' ').join('_').toLowerCase();
+	     	if(filterParts.includes(id)) {
 	     		return "<li class='list-group-item list-group-item-success 123"+id+"'>"+jawn+"</li>\n";
 	     	} else {
 	     		return "<li class='list-group-item list-group-item-danger 123"+id+"'>"+jawn+"</li>\n";
@@ -163,11 +163,16 @@
   }
   socket.on('recs', function (recommendations) {
     $('#allProjects').html('');
-    var length = recommendations.length;
-    for(var i = 0; i < length; i++) {
-      var html = makeProject(recommendations[i]);
+    recommendations.forEach(function(elt) {
+      console.log(elt);
+      var html = makeProject(elt);
       $('#allProjects').append(html);
-    }
+    });
+        // var length = recommendations.length;
+    // for(var i = 0; i < length; i++) {
+    //   var html = makeProject(recommendations[i]);
+    //   $('#allProjects').append(html);
+    // }
   }); 
 
   </script>
