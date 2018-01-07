@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('porkfolio:server');
 var http = require('http');
 var Project = require('../models/ProjectsDB').Project;
+var Parts = require('../models/PartsDB').Parts;
 
 /**
  * Get port from environment and store in Express.
