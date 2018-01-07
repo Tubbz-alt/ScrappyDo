@@ -60,9 +60,9 @@
 		    callback(finished);	
 	    }
     	forWithCallback(project.parts, function(parts) {
-			 var html = "<div class='row'>" + 
-			  "<div class='col-md-12'>" + 
-          "<a href='" + project.link + "'>" + 
+			 var html = "<a href='" + project.link + "' id = \"" + project.name.split(' ').join('_') + "\">" + 
+        "<div class='row'>" + 
+			    "<div class='col-md-12'>" + 
 			      "<div class='thumbnail' style='padding-top: 20px;'>" + 
 			    	  "<div class='col-md-4'>" + 
 					    	"<img src='"+project.image+"' alt='Lights' style='width:100%;'>" +  
@@ -77,9 +77,9 @@
 				        "</div>" + 	    		
 			    	  "</div>" + 
 			      "</div>" + 
-          "</a>" +
+			    "</div>" + 
 			  "</div>" + 
-			"</div>"
+      "</a>"
 
 			$("#allProjects").append(html);
       $("#allProjects")
@@ -122,7 +122,7 @@
           var project = projects[proj];
           var html = makeProject(project);
           // $("#allProjects").append(html);
-          $("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
+          //$("#myDropdown").append('<a href=\" ' + project.link + ' ">' + project.name + '</a>');
         }         
       });
       $("#newPart").keypress(function(e) {
@@ -147,10 +147,11 @@
       var input, filter, ul, li, a, i;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
-      div = document.getElementById("myDropdown");
+      div = document.getElementById("allProjects");
       a = div.getElementsByTagName("a");
       for (i = 0; i < a.length; i++) {
-          if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+          var currID = a[i].id.split('_').join(' ').toUpperCase();
+          if (currID.indexOf(filter) > -1) {
               a[i].style.display = "";
           } else {
               a[i].style.display = "none";
@@ -206,6 +207,9 @@
         </div>
     </div>
     <div class="left col-lg-9">
+    <div id="myDropdown" class="dropdown">
+      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+    </div>
     <div id="allProjects" class = "scroll_box">
 <!-- 	  <div class="col-md-4">
 	    <div class="thumbnail">
@@ -312,10 +316,5 @@
 
 </div>
 
-
-
-<div id="myDropdown" class="dropdown">
-<input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-</div>
 </body>
 </html>
