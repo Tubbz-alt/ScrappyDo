@@ -12,8 +12,7 @@ var projectSchema = new Schema({
 
 var Project = mongoose.model('Project', projectSchema);
 
-Project.create({parts: ['hey'], link: 'hey', name: 'hey'});
-console.log('hey');
+// Project.create({parts: ['hey'], link: 'hey', name: 'hey'});
 
 module.exports = {
 	Project: Project
