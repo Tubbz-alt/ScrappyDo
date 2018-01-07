@@ -59,3 +59,5 @@ typings/
 
 # AWS Credentials
 config.js
+config.json
+views/front_end/trash
