@@ -1,5 +1,4 @@
-# Project
-ScrappyDo
+# ScrappyDo
 
 ## Elevator pitch
 From your scraps, do some hardware hacks!
