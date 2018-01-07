@@ -162,7 +162,12 @@
     socket.emit("update-recs", {filterParts: filterParts});
   }
   socket.on('recs', function (recommendations) {
-    console.log(recommendations);
+    $('#allProjects').html('');
+    var length = recommendations.length;
+    for(var i = 0; i < length; i++) {
+      var html = makeProject(recommendations[i]);
+      $('#allProjects').append(html);
+    }
   }); 
 
   </script>
