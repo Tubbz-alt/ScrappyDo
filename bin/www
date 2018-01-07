@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
     filterParts = data.filterParts;
     console.log(filterParts);
     console.log("whatever the fuck we're searching is: " + filterParts);
-    Project.find({parts: {$all : filterParts}}, function(err, projects) {
+    Project.find({parts: {$in : filterParts}}, function(err, projects) {
       console.log(projects);
       // socket.emit('recs', projects);
     });
