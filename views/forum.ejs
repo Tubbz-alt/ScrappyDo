@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <script type="text/javascript">
+    	var socket = io('http://localhost:8081');
+    	var currTopic = "";
+    	var makeTopic = function(name) {
+    		var nameId = name.split(' ').join('_');
+    		var option = "<option value="+nameId+">"+name+"</option>";
+        	$('#folder').append(option);
+    		var html = "<li id="+nameId+" class='list-group-item'>"+name+"</li>";
+    		return html;
+    	}
+    	$(document).ready(function() {
+    		socket.on('projects', function(topics) {
+    			topics.forEach(function(topic) {
+    				var html = makeTopic(topic.name);
+    				$("#allTopics").append(html);
+    			});
+    		});
+		    $(document).on('mouseenter', 'ul.topics li', function() {
+		      var topic = $(this).attr('id');
+		      if(topic != currTopic) {
+		        $(this).addClass('active');
+		      }
+		    });
+
+		    $(document).on('mouseout', 'ul.topics li', function() {
+		      var topic = $(this).attr('id');
+		      if(topic != currTopic) {
+		        $(this).removeClass('active');
+		      }
+		    });
+
+		    $(document).on('click', 'ul.topics li', function(e) {
+		      if(currTopic != "") {
+		        $('li[id="'+ currTopic +'"]').removeClass('active');
+		      }
+		      currTopic = $(this).attr('id');
+		      socket.emit('get-posts', {topic: $(this).attr('id')});
+		    });
+
+		    $("#add-q").submit(function(e) {
+		    	e.preventDefault();
+		    	var folder = $("#folder").val();
+		    	var email = $("#email").val();
+		    	var question = $("#question").val();
+		    	$("#folder").val('');
+		    	$("#email").val('');
+		    	$("#question").val('');
+		    	socket.emit('new-q', {folder: folder, email: email, question: question});
+		    	$("#Add_Question_Modal").modal('hide');
+		    });
+		    $(document).on('submit', '.answer', function(e) {
+		    	e.preventDefault();
+		    	var question = $(this).closest('.panel')[0];
+		    	var textDiv = $(question).find('h4')[0];
+        		var q = $(textDiv).text();
+		        var answerDiv = $(this).find('.form-control')[0];
+		        var ans = $(answerDiv).val();
+		        $(answerDiv).val('');
+        		console.log(q);
+        		console.log(ans);
+        		socket.emit('new-ans', {question: q, answer: ans});
+		    });
+
+		    socket.on('heres-ans', function(data) {
+		    	var q = data.question;
+		    	var ans = data.answer;
+    			var html = "<li class='list-group-item'>"+ans+"</li>";
+    			var id = ".li-" + q.split(' ').join('_');
+    			$(id).append(html);
+		    });
+
+		    socket.on('questions', function(questions) {
+		    	$("#allQuestions").html('');
+		    	var makeQuestion = function(data) {
+		    		var html = "<div class='panel panel-default'>" + 
+		    			"<div class='panel panel-success'><div class='panel-heading'>"+data.folder.split('_').join(' ')+"</div><div class='panel-body'><h4>"+data.question+"</h4><ul class='list-group li-"+data.question.split(' ').join('_')+"'></ul>" + 
+		    			"</div></div>" + 
+			              '<form class="answer">' + 
+			                '<div class="input-group">' + 
+			                  '<input type="text" class="form-control ans-'+data.question.split(' ').join('_')+'" placeholder="Answer: ">' + 
+			                  '<div class="input-group-btn">' + 
+			                    '<button style="margin-top:8px;" class="btn btn-default btn-'+data.question.split(' ').join('_')+'" type="submit">' + 
+			                      '<i class="">Answer</i>' + 
+			                    '</button>' + 
+			                  '</div>' + 
+			                '</div>' + 
+			              '</form>';
+		    		return html;
+		    	}
+		    	questions.forEach(function(data) {
+		    		var html = makeQuestion(data);
+		    		var q = data.question;
+		    		$("#allQuestions").append(html);
+		    		data.answers.forEach(function(ans) {
+		    			var html = "<li class='list-group-item'>"+ans+"</li>";
+		    			var id = ".li-" + q.split(' ').join('_');
+		    			$(id).append(html);
+		    		});
+		    	});
+		    });
+
+    	});
+    </script>
+  </head>
+  <body>
+
+<nav class="navbar navbar-light">
+        <ul class="nav">
+          <li class="navbar-header">
+            <img src="scrappy.png" id = "logo" alt="Flowers in Chania">
+          </li>
+
+            <li class="navbar-header">
+              <span class="nav_test navbar-text" id = "nav_test" style="">ScrappyDo</span>
+            </li>
+<!--             <li>
+                <p class="navbar-btn">
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition" style="margin-right:8px">Help me identify this part</a>
+                </p>
+            </li>
+            <li>
+                <p class="navbar-btn">
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Add_Project_Modal" style="position: absolute; right: 15px;">Add New Project</a>
+                </p>
+            </li> -->
+
+        </ul>
+</nav>
+
+
+  	<div class="col-lg-4">
+  		<h3 style="text-align:center;">Browse Project Forums Below</h3>
+        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#Add_Question_Modal" style="width: 100%; margin-bottom: 10px;">Post A Question</a>
+  		<ul id="allTopics" class="list-group topics" style="">
+  			
+  		</ul>
+  	</div>
+  	<div class="col-lg-8">
+  		<div id="allQuestions">
+<!-- 		<div class="panel panel-default">
+			  <div class="panel-heading">Panel heading</div>
+			  <div class="panel-body">
+			    <p>...</p>
+			  </div>
+
+			  <ul class="list-group">
+			    <li class="list-group-item">Cras justo odio</li>
+			    <li class="list-group-item">Dapibus ac facilisis in</li>
+			    <li class="list-group-item">Morbi leo risus</li>
+			    <li class="list-group-item">Porta ac consectetur ac</li>
+			    <li class="list-group-item">Vestibulum at eros</li>
+			  </ul>
+			</div> -->
+  		</div>
+  	</div>
+
+  <div class="modal fade" id="Add_Question_Modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add New Question</h4>
+        </div>
+        <div class="modal-body">
+          <form id="add-q">
+          	  <div class="form-group">
+	            <label><b>Project: </b></label>
+	            <select class="selectpicker" id="folder"></select>
+          	  </div>
+              <div class="form-group">
+                <label for="Name">Enter Email Address</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="e.g. JohnSmith@gmail.com">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Enter Your Question</label>
+                <input type="text" class="form-control" id="question" placeholder="">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>         
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
