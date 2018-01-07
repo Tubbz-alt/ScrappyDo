@@ -13,6 +13,31 @@
   <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
   <script type='text/javascript' src='./config.js'></script> <!-- This holds the AWS Credentials -->
   <!-- <script src="typeahead.min.js"></script> may or may not need-->
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+        // Constructing the suggestion engine
+        var components = new Bloodhound({
+            datumTokenizer : Bloodhound.tokenizers.whitespace,
+            queryTokenizer : Bloodhound.tokenizers.whitespace,
+            remote : {
+                url : '../search?key=%QUERY',
+                wildcard : '%QUERY'
+            }
+        });
+        // Initializing the typeahead
+        $('.typeahead').typeahead({
+            hint : false,
+            highlight : true, /* Enable substring highlighting */
+            minLength : 1
+        /* Specify minimum characters required for showing suggestions */
+        }, {
+            name : 'components',
+            source : components
+        });
+    });
+  </script>
+
   <script type="text/javascript">
   	var socket = io('http://localhost:3000');
   	var makePart = function(part) {
@@ -30,8 +55,6 @@
   			var parts = $('#parts').val();
   			socket.emit('new-proj', {name: name, link: link, parts: parts});
   			$('#myModal').modal('toggle');
-<<<<<<< HEAD
-=======
   		});
   		$("#newPart").keypress(function(e) {
   			if(e.which == 13) {
@@ -40,7 +63,6 @@
   				$("#tags").append(html);
   				$("#newPart").val("");
   			}
->>>>>>> a7cca60ec58aa444491964d2ebcf8f4c05f5c8f2
   		});
   	});
   </script>
@@ -86,11 +108,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
-<<<<<<< HEAD
-			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-=======
 			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino, Servo motor, ...">
->>>>>>> a7cca60ec58aa444491964d2ebcf8f4c05f5c8f2
 			  </div>
 			  <button type="submit" class="btn btn-primary">Submit</button>	      	
 	      </form>

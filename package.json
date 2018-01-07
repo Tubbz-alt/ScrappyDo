@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.168.0",
     "body-parser": "~1.18.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -15,6 +16,7 @@
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
-    "node-rekognition": "^0.3.0"
+    "vogels": "^2.2.0",
+    "joi": "^13.0.2"
   }
 }

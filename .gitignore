@@ -59,3 +59,4 @@ typings/
 
 # AWS Credentials
 config.js
+config.json
