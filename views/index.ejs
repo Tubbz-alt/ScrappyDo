@@ -62,11 +62,10 @@
     	forWithCallback(project.parts, function(parts) {
 			 var html = "<div class='row'>" + 
 			  "<div class='col-md-12'>" + 
-			    "<div class='thumbnail' style='padding-top: 20px;'>" + 
-			    	"<div class='col-md-4'>" + 
-					    "<a href='http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg'>" + 
-					    	"<img src='"+project.image+"' alt='Lights' style='width:100%;'>" + 
-					    "</a>" + 
+          "<a href='" + project.link + "'>" + 
+			      "<div class='thumbnail' style='padding-top: 20px;'>" + 
+			    	  "<div class='col-md-4'>" + 
+					    	"<img src='"+project.image+"' alt='Lights' style='width:100%;'>" +  
 				        "<div class='caption'>" + 
 				          "<h2>"+project.name+"</h2>" + 
 				        "</div>" + 	    		
@@ -76,11 +75,14 @@
 				          "<ul class='list-group'>" + parts + 
 				          "</ul>" + 
 				        "</div>" + 	    		
-			    	"</div>" + 
-			    "</div>" + 
+			    	  "</div>" + 
+			      "</div>" + 
+          "</a>" +
 			  "</div>" + 
 			"</div>"
+
 			$("#allProjects").append(html);
+      $("#allProjects")
 	    	return html; 
     	});
     }
@@ -173,18 +175,19 @@
     <div class="container">
         <ul class="nav">
             <li>
-              <span class="nav_test navbar-text" id = "nav_test">Project Finder</span>
+              <span class="nav_test navbar-text" id = "nav_test" style="padding: 0;">Project Finder</span>
             </li>
             <li>
                 <p class="navbar-btn">
-                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Add_Project_Modal">Add New Project</a>
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition" style="margin-right:8px">Help me identify this part</a>
                 </p>
             </li>
             <li>
                 <p class="navbar-btn">
-                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition">Help me identify this part</a>
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Add_Project_Modal" style="position: absolute; right: 0px;">Add New Project</a>
                 </p>
             </li>
+
         </ul>
     </div>
 </nav>
@@ -203,7 +206,7 @@
         </div>
     </div>
     <div class="left col-lg-9">
-    <div id="allProjects">
+    <div id="allProjects" class = "scroll_box">
 <!-- 	  <div class="col-md-4">
 	    <div class="thumbnail">
 	      <a href="http://nevonprojects.com/wp-content/uploads/2017/12/Staircase-Climbing-Trolley3.jpg">
