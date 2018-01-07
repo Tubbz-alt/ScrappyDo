@@ -98,19 +98,11 @@
 	    }
 	}  	
 	function updateRecs() {
-		var length = filterParts.length();
-		Project.createIndex({"parts":"text"})
-		
-		var match = length;
-		var terms = filterParts.join(" ");
-
-		Project.aggregate([
-		 { $match: { $text: { $search: terms } } },
-		 { $project: {"parts":1, score: {$meta: "textScore"}}},
-		 { $sort: { score: 1 }},
-		 { $match: { score: { $gte: match } } }
-		])
+		socket.emit("update-recs", {filterParts: filterParts});
 	}
+	socket.on('recs', function (recommendations) {
+		console.log(recommendations);
+	}) 
 
   </script>
 </head>
