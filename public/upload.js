@@ -84,7 +84,6 @@ button.addEventListener('click', function (e) {
                                 document.getElementById("component-count").innerHTML = "Your Components (" + filterParts.length + ")";
                                 $("#tags").append(html);
                                 updateRecs();
-                                this.style.display = "none";
                             }
                         });
                     }
