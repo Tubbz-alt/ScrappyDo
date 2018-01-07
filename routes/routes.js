@@ -18,6 +18,19 @@ var Component = vogels.define('Component', {
     }
 });
 
+
+var test = new Component({
+    item : "wire"
+});
+
+test.save(function(err) {
+    if (err) {
+        console.log("Error accessing components database");
+    } else {
+        console.log('created item in DynamoDB', test.get('item'));
+    }
+});
+
 var search = function(req,res) {
     console.log("Searching..." + req.query.key);
     var data = [];
@@ -29,8 +42,8 @@ var search = function(req,res) {
             console.log(resp.Items);
             var size = Object.keys(resp.Items).length;
             for (var i = 0; i < size; i++) {
-                console.log(resp.Items[i].attrs.email);
-                data.push(resp.Items[i].attrs.email);
+                console.log(resp.Items[i].attrs.item);
+                data.push(resp.Items[i].attrs.item);
             }
             console.log('Found', resp.Count, 'items');
 
