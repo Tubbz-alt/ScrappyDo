@@ -11,6 +11,10 @@
   <script src='/socket.io/socket.io.js'></script>
   <script type="text/javascript">
   	var socket = io('http://localhost:3000');
+  	var makePart = function(part) {
+  		var html = "";
+  		return html;
+  	}
   	$(document).ready(function() {
   		$("#add-proj").submit(function(e) {
   			e.preventDefault();
@@ -20,15 +24,30 @@
   			socket.emit('new-proj', {name: name, link: link, parts: parts});
   			$('#myModal').modal('toggle');
   		});
+  		$("#newPart").keypress(function(e) {
+  			if(e.which == 13) {
+  				var part = $("#newPart").val();
+  				console.log(part);
+  				$("#newPart").val("");
+  			}
+  		});
   	});
   </script>
 </head>
 <body>
 
-<div class="container">
-  <h2>Modal Example</h2>
+<div class="container" style="padding:10px">
+	<div class="left col-lg-3">
+		<input type="text" class="form-control" id="newPart">
+  		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  		<div id="tags">
+  			
+  		</div>
+	</div>
+	<div class="left col-lg-9">
+		
+	</div>
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
