@@ -113,6 +113,7 @@ html {
 }
 body {
   margin: 0;
+  background-image: radial-gradient(circle, #D0ECE7, #A3E4D7) ;
 }
 
 .error {
