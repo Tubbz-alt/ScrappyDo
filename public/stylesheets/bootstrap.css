@@ -156,7 +156,6 @@ body {
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: black;
 }
 
 .dropdown-content {
@@ -294,7 +293,7 @@ position: absolute;
     }
 
     .navbar a:hover, .dropdown:hover .dropbtn {
-        background-color: red;
+        
     }
 
     .dropdown-content {

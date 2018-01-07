@@ -47,7 +47,7 @@ io.on('connection', function(socket) {
   });  
   socket.on('new-proj', function(data) {
     console.log(data);
-    Project.create({parts: data.parts, name: data.name, link: data.link});
+    Project.create({parts: data.parts, name: data.name, link: data.link, image: data.url});
     console.log("parts: " + data.parts);
     var parts = (data.parts).split(",");
     for (var s in parts) {

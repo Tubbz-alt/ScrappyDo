@@ -56,14 +56,7 @@
     		var effect = $(this).data('effect');
         	$(this).closest('.panel')[effect]();
   		});
-  		$("#add-proj").submit(function(e) {
-  			e.preventDefault();
-  			var name = $('#name').val();
-  			var link = $('#link').val();
-  			var parts = $('#parts').val();
-  			socket.emit('new-proj', {name: name, link: link, parts: parts});
-  			$('#myModal').modal('toggle');
-  		});
+
   		socket.on('projects', function(projects) {
   			for(var proj in projects) {
   				var project = projects[proj];
@@ -218,6 +211,14 @@
 		            console.log(url);
 		            $("#pic").attr("src", url);
 		            $("#pic").removeClass("hidden");
+			  		$("#add-proj").submit(function(e) {
+			  			e.preventDefault();
+			  			var name = $('#name').val();
+			  			var link = $('#link').val();
+			  			var parts = $('#parts').val();
+			  			socket.emit('new-proj', {name: name, link: link, parts: parts, url: url});
+			  			$('#myModal').modal('toggle');
+			  		});
 		        });           
 		      }
 		    });		
