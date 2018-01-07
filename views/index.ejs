@@ -111,58 +111,77 @@
 		 { $match: { score: { $gte: match } } }
 		])
 	}
+
   </script>
 </head>
 <body>
 
+
+
 <nav class="navbar navbar-light">
-  <span class="nav_test navbar-nav navbar-text" id = "nav_test">Project Finder</span>
+    <div class="container">
+        <ul class="nav">
+            <li>
+              <span class="nav_test navbar-text" id = "nav_test">Project Finder</span>
+            </li>
+            <li>
+                <p class="navbar-btn">
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Add_Project_Modal">Add New Project</a>
+                </p>
+            </li>
+            <li>
+                <p class="navbar-btn">
+                    <a type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#Upload_Rekognition">Get Parts From Image</a>
+                </p>
+            </li>
+        </ul>
+    </div>
 </nav>
 
+
 <div class="container" style="padding:10px">
-	<div class="left col-lg-3">
+    <div class="left col-lg-3">
 
         <h1 class="md-toolbar-tools">Your Components</h1>
         <div id="bloodhound">
-		  <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
+            <input type="text" class="form-control typeahead" placeholder="Components" id="newPart">
         </div>
-
-  		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-  		<div id="tags">
-  			
-  		</div>
-	</div>
-	<div class="left col-lg-9">
-	</div>	
+      
+        <div id="tags">
+            
+        </div>
+    </div>
+    <div class="left col-lg-9">
+    </div>  
   <!-- Trigger the modal with a button -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <!-- Add Project Modal -->
+  <div class="modal fade" id="Add_Project_Modal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title">Add New Project</h4>
         </div>
         <div class="modal-body">
-	      <form id="add-proj">
-			  <div class="form-group">
-			    <label for="Name">Enter Name of Project</label>
-			    <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Enter Link to Project</label>
-			    <input type="text" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
-			    <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
-			  <label class="btn btn-default btn-file" >Upload an Image<input type="file" style="display: none;"></label>
-			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>	      	
-	      </form>
+          <form id="add-proj">
+              <div class="form-group">
+                <label for="Name">Enter Name of Project</label>
+                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="e.g. Aluminum Foil Robot">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Enter Link to Project</label>
+                <input type="text" class="form-control" id="link" placeholder="e.g. http://diy.com/build-a-robot">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Enter Parts Needed For Project, Separated By Commas</label>
+                <input type="text" class="form-control" id="parts" placeholder="e.g. Arduino,Servo motor,...">
+              <label class="btn btn-default btn-file uploadPic" >Upload an Image<input id='uploadPic' type="file" style="display: none;"></label>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>         
+          </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -172,6 +191,29 @@
     </div>
   </div>
   
+  <!-- Upload to Rekognition -->
+  <div class="modal fade" id="Upload_Rekognition" role="dialog">
+    <div class="modal-dialog">
+    
+    <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Get Parts From Image</h4>
+        </div>
+        <div class="modal-body">
+           <form id="upload-img">
+
+           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 </div>
 
 <!-- Add panels of stuff to the following -->
@@ -189,89 +231,8 @@
     <input id="myPicURL" type="text" name="inputPicURL" style="display: none;">
 
     <div id="results">No error</div>    
-    <script type="text/javascript">  
-	    AWS.config.update({
-	        "accessKeyId": config.MY_KEY,
-	        "secretAccessKey": config.SECRET_KEY,
-	        "region": "us-east-1"
-	    });
-	    var s3 = new AWS.S3();      
-        var fileChooser = document.getElementById('file-chooser');
-        var button = document.getElementById('upload-button');
-        var results = document.getElementById('results');
-
-		$(document).on('change', 'input[type="file"]', function(e) {
-			var name = $('#name').val();
-			var file = e.target.files[0];
-			var fileName = e.target.files[0].name;
-			var reader = new FileReader();
-			reader.onloadend = function() {
-			}
-		    var file = fileData.file;
-		    var name = fileData.name;
-
-		    var data = {Bucket: 'pennbook-my-images',
-						Key: name,        
-		    			ContentType: file.type,
-                    	Body: file,
-                    	ACL: 'public-read'};
-		    s3.putObject(data, function(err, data) {
-		      console.log('putting object in ' + name);
-		      if(err) {
-		        console.log(err);
-		      } else {
-		        var urlParams = {Bucket: 'pennbook-my-images', Key: name};
-		        s3Bucket.getSignedUrl('getObject', urlParams, function(err, url){
-		            socket.emit('url', url);
-		        });           
-		        console.log(data);
-		      }
-		    });		
-		});	        
-
-        button.addEventListener('click', function () {
-            var file = fileChooser.files[0];
-            if (file != null) {         
-                document.getElementById("myLink").src= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
-                document.getElementById("myPicURL").value= "https://s3.amazonaws.com/pennbook-my-images/"+file.name.split(' ').join('+');
-            }
-
-            if (file) {            
-                var params = {
-                    Bucket: 'pennbook-my-images',
-                    Key: file.name, //file.name,
-                    ContentType: file.type,
-                    Body: file,
-                    ACL: 'public-read'
-                };        
-                s3.putObject(params, function (err, res) {
-                    if (err) {
-                        results.innerHTML = ("Error uploading data: ", err);
-                    } else {
-                        results.innerHTML = ("Successfully uploaded data");
-                        var rekognition = new AWS.Rekognition();
-
-                        var searchParams = {
-                            Image: {'S3Object':{'Bucket':'pennbook-my-images','Name':file.name}}
-                        }
-
-                        rekognition.detectLabels(searchParams, function (err, data) {
-                            if (err) {
-                                console.log(err, err.stack); // an error occurred
-                            } else { 
-                                console.log(data.Labels);
-                            }
-                        });
-                    }
-                });
-
-
-
-            } else {
-                results.innerHTML = 'Nothing to upload.';
-            }
-        }, false);
-    </script>	
+    <script type="text/javascript" src='./upload.js'>  </script>   
+    
 </div>
 <div id="myDropdown" class="dropdown">
 <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
