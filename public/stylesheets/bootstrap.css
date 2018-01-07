@@ -15,7 +15,13 @@
 
 .scroll_box{
   width: auto;
-  height: 600px;
+  height: 540px;
+  overflow:auto;
+}
+
+#tags{
+  width: auto;
+  height: 440px;
   overflow:auto;
 }
 
@@ -47,6 +53,10 @@
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+}
+
+#myDropdown {
+  width : 100%;
 }
 
 .dropdown a:hover {background-color: #ddd}
