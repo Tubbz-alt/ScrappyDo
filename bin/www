@@ -44,6 +44,27 @@ var findWord = function(word) {
 }
 
 io.on('connection', function(socket) {
+  socket.on('update-recs', function(data) {
+    console.log("YO I GOT HERE");
+    filterParts = data.filterParts;
+    filter = filterParts.join(" ");
+    console.log("filter: " + filter);
+
+    Project.find(
+        { $text : { $search : filter } }, 
+        { score : { $meta: "textScore" } }
+    )
+    .sort({ score : { $meta : 'textScore' } })
+    .exec(function(err, results) {
+      console.log("YO I GOT TO THE COOLER PART");
+        console.log(results);
+        socket.emit('recs', results);
+    });
+
+  });
+  // Project.remove({parts: []}, function(err, empty) {
+    
+  // });
   socket.on('addImage', function(fileData) {
   });  
   socket.on('new-proj', function(data) {
