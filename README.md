@@ -1,7 +1,19 @@
 # ScrappyDo
-
-## Elevator pitch
 From your scraps, do some hardware hacks!
+
+## How to run ScrappyDo
+
+Replace config.json and config.js with your AWS credentials.
+
+Install the dependencies with
+```
+npm install
+```
+Then start the server with
+```
+npm start
+```
+Scrappydo should be running on localhost:8081
 
 ## Inspiration
 Since we were at a hardware-focused hackathon, we wanted to build something with our available hardware.  Overwhelmed, we couldn’t find any projects online that we had the components to build -- nor any websites that let us put in components to find suitable projects. As a result, we decided to build ScrappyDo, the very first application that does just that!  Inspired by IBM Chef Watson which finds recipes based on input ingredients, ScrappyDo enables hackers worldwide and anybody with a lot of scrap components to find projects that they can actually build!
