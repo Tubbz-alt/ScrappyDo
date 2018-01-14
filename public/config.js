@@ -1,0 +1,4 @@
+var config = {
+  MY_KEY : 'AWS_ACCESS_KEY_ID',
+  SECRET_KEY : 'AWS_SECRET_ACCESS_KEY'
+}
